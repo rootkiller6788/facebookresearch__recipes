@@ -7,7 +7,7 @@
 #!/usr/bin/env python3
 # pyre-strict
 
-from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Tuple, Union
+from typing import Any, Callable, Dict, Iterable, List, Mapping, Optional, Union
 
 import torch
 import torch.nn as nn
@@ -98,7 +98,9 @@ class ConvTasNetModule(LightningModule):
 
         return loss
 
-    def configure_optimizers(self) -> Tuple[Any]:
+    def configure_optimizers(self) -> Any:
+        if self.lr_scheduler is None:
+            return self.optim
         epoch_schedulers = {
             "scheduler": self.lr_scheduler,
             "monitor": "losses/val_loss",
